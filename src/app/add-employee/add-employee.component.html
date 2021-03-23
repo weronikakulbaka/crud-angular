@@ -1,0 +1,49 @@
+<div class="container">
+    <mat-toolbar>
+        <span *ngIf="urlParameter == 0; else edit">Dodaj pracownika</span>
+        <ng-template #edit> Edytuj pracownika</ng-template>
+        <span class="small-spacer"></span>
+        <span><button mat-raised-button [routerLink]="['./../../employees']">Wróć do listy pracowników</button></span>
+    </mat-toolbar>
+
+    <mat-card>
+
+        <form [formGroup]="addEmployeeFormGroup" class="example-form">
+            <table class="example-full-width" cellspacing="0"><tr>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>Imię</mat-label>
+                <input type="text" matInput formControlName="nameFormControl">
+                <mat-error *ngIf="nameFormControl?.hasError('required') && urlParameter == 0">
+                    Imię jest <strong>wymagane</strong>
+                </mat-error>
+              </mat-form-field></td>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>Nazwisko</mat-label>
+                <input type="text" matInput formControlName="surnameFormControl">
+                <mat-error *ngIf="surnameFormControl?.hasError('required') && urlParameter == 0">
+                    Nazwisko jest <strong>wymagane</strong>
+                </mat-error>
+              </mat-form-field></td>
+            </tr></table>
+            <p>
+              <mat-form-field class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input type="email" matInput formControlName="emailFormControl" placeholder="Ex. pat@example.com">
+                <mat-error *ngIf="emailFormControl?.hasError('email') && !emailFormControl?.hasError('required')">
+                  Wprowadź prawdziwy adres e-mail
+                </mat-error>
+                <mat-error *ngIf="emailFormControl?.hasError('required') && urlParameter == 0">
+                  Email jest <strong>wymagany</strong>
+                </mat-error>
+              </mat-form-field>
+            </p>
+            <p>
+                <button mat-raised-button color="primary" [disabled]="!addEmployeeFormGroup.valid" (click)="employeeChanges()">
+                   <div *ngIf="urlParameter == 0; else edit">Dodaj pracownika</div>
+                   <ng-template #edit> Edytuj pracownika</ng-template>
+                </button>
+            </p>
+        </form>
+
+    </mat-card>
+</div>
